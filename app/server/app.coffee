@@ -2,9 +2,9 @@
 
 uuid = require 'node-uuid'
 
-# setInterval (e)->
-  # exports.actions.updateUsers()
-# , 5000
+setInterval (e)->
+  exports.actions.updateUsers()
+, 10000
 
 exports.actions =
   
@@ -12,6 +12,7 @@ exports.actions =
     name = name.trim()
     name = SS.shared.util.format name
     @session.setUserId name
+    exports.actions.updateUsers()
     cb(name)
     
   getOnlineUsers: (cb)->
