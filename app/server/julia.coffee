@@ -10,7 +10,7 @@ stripPrompt = (data)->
   
 class JuliaSession extends events.EventEmitter
   constructor:->
-    @julia = spawn("/Users/Au/juliaSocial/julia/julia", [])
+    @julia = spawn(SS.config.julia, [])
     @callback = {}
     @queue = []
     answer = ""
@@ -169,6 +169,11 @@ sessions = {}
 sessions[0] = new JuliaSession()
 
 exports.actions = 
+  chat:(cmd, cb)->
+    user_id = @session.user_id
+    SS.publish.broadcast 'juliaMessage', 
+      cmd:cmd
+      from:user_id
   execute:(id, cmd, cb)->
     # console.log cmd
     user_id = @session.user_id

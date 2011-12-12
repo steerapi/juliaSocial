@@ -45,6 +45,7 @@ jqconsole_welcome = ->
 
 jqconsole_init = (name)->
   $ ->
+    chatmode = false
     $("#tool-bar").show()
     $("#terminal-console").empty()
     header = "Welcome to Julia Social.\nYour name is #{name}.\n"
@@ -56,7 +57,21 @@ jqconsole_init = (name)->
     jqconsole.RegisterShortcut "A", ->
       jqconsole.MoveToStart()
       handler()
+
+    jqconsole.RegisterShortcut "Q", ->
+      if chatmode
+        chatmode = false
+        jqconsole.$prompt_label.text("#{name}> ")
+        jqconsole.prompt_label_main = "#{name}> "
+      else
+        chatmode = true
+        jqconsole.$prompt_label.text("[CHAT] #{name}> ")
+        jqconsole.prompt_label_main = "[CHAT] #{name}> "
+      handler()
   
+    jqconsole.RegisterShortcut "W", ->
+      handler()
+    
     jqconsole.RegisterShortcut "E", ->
       jqconsole.MoveToEnd()
       handler()
@@ -73,12 +88,19 @@ jqconsole_init = (name)->
         if /end/.test line
           line = line.trim()
         jqconsole.Write "[#{from}] " + line + "\n", "", false
-      result.split(/[\n|\r]/).forEach (line)->
+      result?.split(/[\n|\r]/).forEach (line)->
         jqconsole.Write "[#{from}] ==> " + line + "\n"
-      
+    chathandler = (command)->
+      console.log "CMD: "+command
+      # jqconsole.Prompt true, chathandler, (command)->
+        # false
     handler = (command) ->
       if command
-        SS.server.julia.execute 0, command, (data)->
+        if chatmode
+          SS.server.julia.chat command, (data)->
+        else
+          SS.server.julia.execute 0, command, (data)->
+          
       jqconsole.Prompt true, handler, (command)->
         cmds = command.split(/\n/)
         first_line = cmds[0]
