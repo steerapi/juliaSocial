@@ -1,0 +1,51 @@
+!!! 5
+html(lang="en")
+  head
+    != SocketStream
+    meta(charset="utf-8")
+    title Julia - A fresh approach to technical computing.
+  body
+    #main
+      #left-column(style='height: 206px;')
+        h1 The Julia Language
+        a.current-page(href='#')#prompt
+          img.bullet(src='images/bullet.png', alt='')
+          | Interactive Prompt
+        a(href='#')#editor
+          img.bullet(src='images/bullet.png', alt='')
+          | Editor
+        a(href='http://github.com/JuliaLang/julia/wiki')
+          img.bullet(src='images/bullet.png', alt='')
+          | Documentation
+        a(href='http://julialang.org/')
+          img.bullet(src='images/bullet.png', alt='')
+          | Julia Home
+        h2 Quick Reference
+        p For help, try one of these:
+        code help()
+        br
+        code help(function)
+        br
+        code apropos("string")
+      #right-column(style='height: 700px;')
+        #tool-bar.hidden
+          button(style="font-size:70%;")#restart Restart Julia
+        #tool-bar-editor.hidden
+          button(style="font-size:70%;")#run Run Code In Prompt
+        #pad
+        #terminal-console
+        //
+          form#terminal-form(style='height: 206px;')
+            #terminal
+            div
+              #prompt(style='display: block;') julia> 
+              textarea#terminal-input(spellcheck='false', rows='1', cols='20', style='resize: none; overflow-y: hidden; height: 17px; width: 652px;')
+      #chat-column
+        h1 People Online
+        #people-head
+        #people-list
+      .float-clear
+    #padContent.hidden
+    arclones
+      textarea.ar1323558530856(spellcheck='false', rows='1', cols='20', disabled='disabled', style='resize: none; line-height: normal; text-decoration: none; letter-spacing: normal; font-size: 14px; font-family: \'Droid Sans Mono\', Consolas, Courier, \'Courier New\', monospace; font-style: normal; font-weight: normal; text-transform: none; text-align: -webkit-auto; direction: ltr; word-spacing: 0px; padding-top: 0px; padding-left: 0px; padding-bottom: 0px; padding-right: 0px; position: absolute; top: -9999px; left: -9999px; opacity: 0; overflow-x: hidden; overflow-y: hidden; width: 500px; height: 0px;', tabindex='-1')
+    
