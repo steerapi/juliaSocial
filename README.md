@@ -1,4 +1,4 @@
-Julia Social: social coding for Julia
+Julia Social: Social Coding for Julia
 ====================
 
 Coming Soon
