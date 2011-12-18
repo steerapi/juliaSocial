@@ -1,8 +1,8 @@
 Coming Soon
 ====================
-*Sample page on a cluster
-*Multiple rooms
-*Julia syntax parser
++ Sample page on a cluster
++ Multiple rooms
++ Julia syntax parser
 
 Installation
 ====================
