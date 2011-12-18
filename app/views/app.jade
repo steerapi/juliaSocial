@@ -27,15 +27,15 @@ html(lang="en")
         code help(function)
         br
         code apropos("string")
-      #right-column(style='height: 700px;')
+      #right-column
         #tool-bar.hidden
           button(style="font-size:70%;")#restart Restart Julia
-        #tool-bar-editor.hidden
-          button(style="font-size:70%;")#run Run Code In Prompt
-        #pad
+          button(style="font-size:70%;")#restart_editor.hidden Restart Editor
+          button(style="font-size:70%;")#run.hidden Run Code
+        #pad.hidden
         #terminal-console
         //
-          form#terminal-form(style='height: 206px;')
+          form#terminal-form
             #terminal
             div
               #prompt(style='display: block;') julia> 

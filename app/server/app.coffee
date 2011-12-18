@@ -1,7 +1,5 @@
 # Server-side Code
 
-uuid = require 'node-uuid'
-
 setInterval (e)->
   exports.actions.updateUsers()
 , 10000
@@ -27,4 +25,6 @@ exports.actions =
   updateUsers:(cb)->
     exports.actions.getOnlineUsers (users)->
       SS.publish.broadcast 'updateUser', users 
-    
+  
+  getEtherpadHost:(cb)->
+    cb(SS.config.etherpad)

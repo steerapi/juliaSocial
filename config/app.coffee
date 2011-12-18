@@ -30,6 +30,7 @@ exports.config =
     https_only:   false
   
   julia: "/Users/Au/juliaSocial/julia/julia"
+  etherpad: "http://beta.etherpad.org"
   # Load balancing. Install ZeroMQ (type 'socketstream help' for info) then set suitable TCP values for your network once you're ready to run across multiple boxes
   #cluster:
   #  sockets:

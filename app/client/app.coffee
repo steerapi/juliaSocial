@@ -47,9 +47,12 @@ jqconsole_init = (name)->
   $ ->
     chatmode = false
     $("#tool-bar").show()
+    set_outer_height "#terminal-console", $(window).height()-$("#tool-bar").height()
+    init_editor(false)
     $("#terminal-console").empty()
     header = "Welcome to Julia Social.\nYour name is #{name}.\n"
     jqconsole = $("#terminal-console").jqconsole(header, "#{name}> ")
+    
     jqconsole.RegisterShortcut "Z", ->
       jqconsole.AbortPrompt()
       handler()
@@ -116,10 +119,11 @@ jqconsole_init = (name)->
   
     handler()
 
+set_outer_height = (selector, height) ->
+  $(selector).height 1
+  $(selector).height height + 1 - $(selector).outerHeight(true)
+  
 julia = ->
-  set_outer_height = (selector, height) ->
-    $(selector).height 1
-    $(selector).height height + 1 - $(selector).outerHeight(true)
   set_column_heights = ->
     set_outer_height "#left-column", $(window).height()
     set_outer_height "#right-column", $(window).height()
@@ -489,8 +493,32 @@ showMainScreen = ->
       checkBoundary: true
     false
 
+init_editor = (show)->
+  SS.server.app.getEtherpadHost (host)->
+    $(->
+      thePad = $('#pad')
+      thePad.pad
+        padId:'julia-general'
+        showChat:'false'
+        showControls:'true'
+        userName:exports.user_id
+        host:host
+      if show
+        thePad.show()
+      else
+        thePad.hide()
+      $('#epframepad').attr 'style', 'width:100%'
+      set_outer_height "#epframepad", $(window).height()-$("#tool-bar").height()-5
+    )
+  
+thePad = undefined
 # This method is called automatically when the websocket connection is established. Do not rename/delete
 exports.init = ->
+  # args = window.location.split("?")
+  # if args.length>1
+  # args = args[args.length-1]
+  # args.split("=")
+  #   
   jqconsole_welcome()
   julia()
   $(->
@@ -502,6 +530,8 @@ exports.init = ->
       exports.notify 
         title: ""
         message: "Julia session was restarted."
+    $("#restart_editor").button().click (e)->
+      init_editor(true)
     $("#restart").button().click (e)->
       SS.server.julia.restart (cb)->
     $("#run").button().click (e)->
@@ -521,24 +551,22 @@ exports.init = ->
             message: "The code is blank."
   )
   $("#prompt").click (e)->
-    $("#tool-bar-editor").hide()
-    $("#tool-bar").show()
     $("#prompt").addClass "current-page"
     $("#editor").removeClass "current-page"
     $('#terminal-console').show()
     $('#pad').hide()
   $("#editor").click (e)->
     if exports.user_id
-      $("#tool-bar").hide()
-      $("#tool-bar-editor").show()
+      set_outer_height "#pad", $(window).height()-$("#tool-bar").height()
       $("#editor").addClass "current-page"
       $("#prompt").removeClass "current-page"
       $('#terminal-console').hide()
-      $(->
-        $('#pad').pad({'padId':'julia-general','showChat':'false', 'showControls':'true', 'userName':exports.user_id}); 
-        $('#epframepad').attr 'style', 'width:100%;height:600px'
-        $('#pad').show()
-      )
+
+      $('#epframepad').attr 'style', 'width:100%'
+      set_outer_height "#epframepad", $(window).height()-$("#tool-bar").height()-5
+      $('#run').show()
+      $('#restart_editor').show()
+      $('#pad').show()
     else
       exports.notify
         title: ""
