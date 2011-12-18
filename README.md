@@ -1,11 +1,16 @@
-Coming Soon
+Julia Social
 ====================
+
+Coming Soon
+--------------------
 + Sample page on a cluster
 + Multiple rooms
 + Julia syntax parser
++ Plots
++ Color schemes
 
 Installation
-====================
+--------------------
 This application requires Redis, NodeJS, Etherpad-lite, Socketstream and Julia. Please install them before proceeding.
 
 ### Redis Installation
